@@ -6,9 +6,7 @@ const app = express();
 
 // Create GET request
 app.get("/", (req, res) => {
-   fetch(`http://localhost:${port}/`)
-  .then(response => response.text())
-  res.send(this.response)
+    res.send(`"Express on Vercel and listening on port ${port}`);
   })
 
 /* Server */
