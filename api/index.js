@@ -1,7 +1,11 @@
+import express from "express";
+import dotenv from "dotenv";
+
 // Add Express
 const express = require("express");
 
 // Initialize Express
+dotenv.config();
 const app = express();
 
 // Create GET request
