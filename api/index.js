@@ -8,7 +8,7 @@ const app = express();
 app.get("/", (req, res) => {
    fetch(`http://localhost:${port}/`)
   .then(response => response.text())
-  .then(data => console.log(data));
+  res.send(this.response)
   })
 
 /* Server */
