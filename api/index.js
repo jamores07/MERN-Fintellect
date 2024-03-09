@@ -10,6 +10,11 @@ app.get("/", (req, res) => {
 });
 
 // Initialize server
-app.listen(5000, () => {
-  console.log("Running on port 5000.");
+const port = process.env.PORT || 9000;
+
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
 });
+
+//Export Express API
+module.exports = app;
