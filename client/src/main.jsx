@@ -5,9 +5,7 @@ import './index.css'
 
 /* MirageJS */
 import { server } from "./server";
-
-// eslint-disable-next-line no-undef
-if (process.env.NODE_ENV === "development") {
+{
   server();
 }
 
