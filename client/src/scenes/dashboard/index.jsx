@@ -1,94 +1,80 @@
+import { Box, useMediaQuery } from "@mui/material";
+import Row1 from "./Row1";
 
-import {useEffect, useMemo,  useState  } from "react";
-import {   useTheme } from "@mui/material";
-import {
-  ResponsiveContainer,
-  CartesianGrid,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-} from "recharts";
+const gridTemplateLargeScreens = `
+  "a b c"
+  "a b c"
+  "a b c"
+  "a b f"
+  "d e f"
+  "d e f"
+  "d h i"
+  "g h i"
+  "g h j"
+  "g h j"
+`;
+const gridTemplateSmallScreens = `
+  "a"
+  "a"
+  "a"
+  "a"
+  "b"
+  "b"
+  "b"
+  "b"
+  "c"
+  "c"
+  "c"
+  "d"
+  "d"
+  "d"
+  "e"
+  "e"
+  "f"
+  "f"
+  "f"
+  "g"
+  "g"
+  "g"
+  "h"
+  "h"
+  "h"
+  "h"
+  "i"
+  "i"
+  "j"
+  "j"
+`;
 
 
 const Dashboard = () => {
-  const { palette } = useTheme();
-
-  let [kpiData, setkpiData] = useState([])
-
-  useEffect(() => {
-    fetch("/api/kpi")
-    .then((response) => response.json())
-    .then((json) => {
-     // console.log("Raw JSON Response: ", json);
-      setkpiData(json);
-      //setIsLoading(false); // Data is loaded, stop showing loading state
-    })
-  }, [])
-
-
-  //console.log(kpiData)
-
-  const revenue = useMemo(() => {
-    if (!kpiData || !kpiData.length) return null; 
-    return kpiData[0].monthlyData.map(({ month, revenue }) => {
-      return {
-        name: month.substring(0, 3),
-        revenue: parseFloat(revenue.replace('$', ''))
-      };
-    });
-  }, [kpiData]);
-
-  //console.log(revenue)
+  const isAboveMediumScreens = useMediaQuery("(min-width: 1200px)");
 
 
 
   return (
-    <>
-      <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            width={500}
-            height={300}
-            data={revenue}
-            margin={{
-              top: 17,
-              right: 15,
-              left: -5,
-              bottom: 58,
-            }}
-          >
-            <defs>
-              <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                <stop
-                  offset="5%"
-                  stopColor={palette.primary[300]}
-                  stopOpacity={0.8}
-                />
-                <stop
-                  offset="95%"
-                  stopColor={palette.primary[300]}
-                  stopOpacity={0}
-                />
-              </linearGradient>
-            </defs>
-            <CartesianGrid vertical={false} stroke={palette.grey[800]} />
-            <XAxis
-              dataKey="name"
-              axisLine={false}
-              tickLine={false}
-              style={{ fontSize: "10px" }}
-            />
-            <YAxis
-              axisLine={false}
-              tickLine={false}
-              style={{ fontSize: "10px" }}
-            />
-            <Tooltip />
-            <Bar dataKey="revenue" fill="url(#colorRevenue)" />
-          </BarChart>
-      </ResponsiveContainer>
-    </>
+    <Box
+    width="100%"
+    height="100%"
+    display="grid"
+    gap="1.5rem"
+    sx={
+      isAboveMediumScreens
+        ? {
+            gridTemplateColumns: "repeat(3, minmax(370px, 1fr))",
+            gridTemplateRows: "repeat(10, minmax(60px, 1fr))",
+            gridTemplateAreas: gridTemplateLargeScreens,
+          }
+        : {
+            gridAutoColumns: "1fr",
+            gridAutoRows: "80px",
+            gridTemplateAreas: gridTemplateSmallScreens,
+          }
+    }
+  >
+    <Row1 />
+
+  </Box>
   );
 }
 
