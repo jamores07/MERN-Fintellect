@@ -1,5 +1,5 @@
 import { createServer } from "miragejs";
-import { kpis } from "./data/data";
+import { kpis, products } from "./data/data";
 
 export function server() {
     createServer({
@@ -10,9 +10,9 @@ export function server() {
                 return kpis
             }),
 
-            this.get("/api/products", () => [
-                { message: "Products date here"}
-            ]),
+            this.get("/api/products", () => {
+                return products
+            }),
 
             this.get("/api/transactions", () => [
                 { message: "Transactions data here"}
