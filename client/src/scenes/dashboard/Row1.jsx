@@ -1,6 +1,6 @@
 import BoxHeader from "../../components/BoxHeader";
 import DashboardBox from "../../components/DashboardBox";
-import {useEffect, useMemo,  useState  } from "react";
+import {useMemo} from "react";
 import {   useTheme } from "@mui/material";
 import {
   ResponsiveContainer,
@@ -16,24 +16,13 @@ import {
   Tooltip,
   Area,
 } from "recharts";
+import useFetchData from "../../state/api";
 
 const Row1 = () => {
   const { palette } = useTheme();
+  const { data: kpiData} = useFetchData('/api/kpi');
 
-  let [kpiData, setkpiData] = useState([])
-
-  useEffect(() => {
-    fetch("/api/kpi")
-    .then((response) => response.json())
-    .then((json) => {
-     // console.log("Raw JSON Response: ", json);
-      setkpiData(json);
-      //setIsLoading(false); // Data is loaded, stop showing loading state
-    })
-  }, [])
-
-
-  //console.log(kpiData)
+  console.log(kpiData)
 
   const revenue = useMemo(() => {
     if (!kpiData || !kpiData.length) return null; 
