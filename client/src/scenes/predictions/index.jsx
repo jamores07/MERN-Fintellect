@@ -1,4 +1,6 @@
 
+
+
 const Prediction = () => {
   return (
     <div className="Predict-App">
