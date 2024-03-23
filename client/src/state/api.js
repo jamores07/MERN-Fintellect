@@ -1,22 +1,15 @@
-import {useEffect,  useState  } from "react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-function useFetchData(url) {
-    const [data, setData] = useState([]);
+export const api = createApi({
+    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5173" }),
+    tagTypes: ["Kpis", "Products", "Transactions"],
+    endpoints: (build) => ({
+        getKpis: build.query({
+            query: () => "/api/kpi",
+            providesTags: ["Kpis"],
+        }),
+    })
+})
 
-    useEffect(() => {
-        const fetchData = async () => {
-            
-            const response = await fetch(url)
-            const json = await response.json();
-            setData(json);
-
-        }
-
-        fetchData();
-    }, [url])
-
-    return { data}; 
-
-}
-
-export default useFetchData
+export const { useGetKpisQuery } =
+  api;

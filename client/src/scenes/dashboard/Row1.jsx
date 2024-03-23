@@ -16,47 +16,39 @@ import {
   Tooltip,
   Area,
 } from "recharts";
-import useFetchData from "../../state/api";
+import { useGetKpisQuery } from "../../state/api";
 
 const Row1 = () => {
   const { palette } = useTheme();
-  const { data: kpiData} = useFetchData('/api/kpi');
+  const { data: kpiData} = useGetKpisQuery()
 
-  console.log(kpiData)
-
-  const revenue = useMemo(() => {
-    if (!kpiData || !kpiData.length) return null; 
-    return kpiData[0].monthlyData.map(({ month, revenue }) => {
+  const { revenue, revenueExpenses, revenueProfit } = useMemo(() => {
+    if (!kpiData || !kpiData.length) return { revenue: null, revenueExpenses: null, revenueProfit: null };
+  
+    const monthlyData = kpiData[0].monthlyData;
+  
+    const revenue = monthlyData.map(({ month, revenue }) => ({
+      name: month.substring(0, 3),
+      revenue: parseFloat(revenue.replace('$', ''))
+    }));
+  
+    const revenueExpenses = monthlyData.map(({ month, revenue, expenses }) => ({
+      name: month.substring(0, 3),
+      revenue: parseFloat(revenue.replace('$', '')),
+      expenses: expenses,
+    }));
+  
+    const revenueProfit = monthlyData.map(({ month, revenue, expenses }) => {
+      const parsedRevenue = parseFloat(revenue.replace('$', ''));
       return {
         name: month.substring(0, 3),
-        revenue: parseFloat(revenue.replace('$', ''))
+        revenue: parsedRevenue,
+        profit: (parsedRevenue - expenses).toFixed(2),
       };
     });
+  
+    return { revenue, revenueExpenses, revenueProfit };
   }, [kpiData]);
-
-  const revenueExpenses = useMemo(() => {
-    if (!kpiData || !kpiData.length) return null; 
-    return kpiData[0].monthlyData.map(({ month, revenue, expenses }) => {
-      return {
-        name: month.substring(0, 3),
-        revenue: parseFloat(revenue.replace('$', '')),
-        expenses: expenses,
-      };
-    });
-  }, [kpiData]);
-
-  const revenueProfit = useMemo(() => {
-    if (!kpiData || !kpiData.length) return null; 
-    return kpiData[0].monthlyData.map(({ month, revenue, expenses }) => {
-      return {
-        name: month.substring(0, 3),
-        revenue: parseFloat(revenue.replace('$', '')),
-        profit: (revenue - expenses).toFixed(2),
-      };
-    });
-  }, [kpiData]);
-
-  //console.log(revenue)
 
   return (
     <>
