@@ -8,8 +8,12 @@ export const api = createApi({
             query: () => "/api/kpi",
             providesTags: ["Kpis"],
         }),
+        getProducts: build.query({
+            query: () => "/api/products",
+            providesTags: ["Products"]
+        })
     })
 })
 
-export const { useGetKpisQuery } =
+export const { useGetKpisQuery, useGetProductsQuery } =
   api;

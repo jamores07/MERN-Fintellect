@@ -1,7 +1,7 @@
 import BoxHeader from "../../components/BoxHeader";
 import DashboardBox from "../../components/DashboardBox";
 import {useMemo} from "react";
-import {   useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 import {
   ResponsiveContainer,
   CartesianGrid,
