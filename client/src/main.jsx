@@ -4,7 +4,7 @@ import App from './App.jsx'
 import './index.css'
 
 /* MirageJS */
-import { server } from "./server";
+import { server } from "./server/server.js";
 
 {
   server();
@@ -25,5 +25,5 @@ setupListeners(store.dispatch);
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <App />
-  </Provider>,
+  </Provider>
 )
