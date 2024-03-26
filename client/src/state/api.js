@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const api = createApi({
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5173/" }),
+    baseQuery: fetchBaseQuery({ baseUrl: "http://mern-fintellect-client.vercel.app/" }),
     tagTypes: ["Kpis", "Products", "Transactions"],
     endpoints: (build) => ({
         getKpis: build.query({
